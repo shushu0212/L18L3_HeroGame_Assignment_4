@@ -206,3 +206,13 @@ function heroHeal() {
     document.getElementsByClassName("skill-block")[0].style.display = "block";
   }, 600);
 }
+
+document.onkeyup = function(event) {
+  var key = String.fromCharCode(event.keyCode);
+  if (key == "A") {
+    heroAttack();
+  }
+  if (key == "D") {
+    heroHeal();
+  }  
+}
