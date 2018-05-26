@@ -25,9 +25,7 @@ class BaseCharacter {
     var i = 1;
     _this.id = setInterval(function() {
       if (i == 1) {
-        if (i ==1) {
-          _this.element.getElementsByClassName("effect-image")[0].style.display = "block"
-        };
+        _this.element.getElementsByClassName("effect-image")[0].style.display = "block";
         _this.element.getElementsByClassName("hurt-text")[0].classList.add("attacked");
         _this.element.getElementsByClassName("hurt-text")[0].textContent = damage;
       }
@@ -82,8 +80,27 @@ class Hero extends BaseCharacter {
     }
     this.hp += healHp;
     this.updateHtml(this.hpElement, this.hurtElement);
+    document.getElementsByClassName("heal-text")[0].textContent = healHp;
+    var i = 1;
     var _this = this;
-    _this.element.getElementsByClassName("heal-text")[0].textContent = healHp;
+    _this.id = setInterval(function() {
+      setTimeout(function() {      
+          document.getElementsByClassName("heal-text")[0].classList.add("healing");
+          setTimeout(function() {
+            document.getElementsByClassName("heal-text")[0].classList.remove("healing");
+            document.getElementsByClassName("heal-text")[0].textContent = "";
+          },500);    
+        },100);
+      if (i ==1){
+        _this.element.getElementsByClassName("effect-image")[0].style.display = "block";
+      }
+      _this.element.getElementsByClassName("effect-image")[0].src = 'images/effect/heal/'+ i +'.png';
+      i++;
+      if (i > 8) {
+        _this.element.getElementsByClassName("effect-image")[0].style.display = "none";
+        clearInterval(_this.id);
+      }
+    }, 50);
   }
 }
 
@@ -181,16 +198,11 @@ function addHealEvent() {
 addHealEvent();
 
 function heroHeal() {
-  document.getElementsByClassName("skill-block")[0].style.display = "none";
+  document.getElementsByClassName("skill-block")[0].style.display = "none";  
   setTimeout(function() {
-    hero.heal();
-    document.getElementsByClassName("heal-text")[0].classList.add("healing");
-    setTimeout(function() {
-      document.getElementsByClassName("heal-text")[0].classList.remove("healing");
-      document.getElementsByClassName("heal-text")[0].textContent = "";
-    },500);    
+      hero.heal();   
   },100);
   setTimeout(function() {
     document.getElementsByClassName("skill-block")[0].style.display = "block";
   }, 600);
-};
+}
